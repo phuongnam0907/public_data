@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget>
 	<ver>0.2.1</ver>
-	<size>6415</size>
-	<widgetname>Hotel TV</widgetname>
+	<size>3615</size>
+	<widgetname>HotelTV</widgetname>
 	<webtype>tizen</webtype>
 </widget>
