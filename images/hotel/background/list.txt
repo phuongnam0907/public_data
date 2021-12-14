@@ -1,0 +1,5 @@
+https://raw.githubusercontent.com/phuongnam0907/public_data/main/images/hotel/background/background_0.png
+https://raw.githubusercontent.com/phuongnam0907/public_data/main/images/hotel/background/background_1.jpg
+https://raw.githubusercontent.com/phuongnam0907/public_data/main/images/hotel/background/background_2.jpg
+https://raw.githubusercontent.com/phuongnam0907/public_data/main/images/hotel/background/background_3.jpg
+https://raw.githubusercontent.com/phuongnam0907/public_data/main/images/hotel/background/background_4.jpg
