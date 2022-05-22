@@ -1,68 +1,38 @@
 [
     {
-        "station_id": "10",
+        "station_id": "water-sensor-005",
         "data": [
             {
                 "mapKey": "turbidity",
-                "formula": "x1+x2",
-                "parameter": [
-                    "x1",
-                    "x2"
-                ]
+                "formula": "x1+x2"
             },
             {
                 "mapKey": "tds",
-                "formula": "x1+x2",
-                "parameter": [
-                    "x1",
-                    "x2"
-                ]
+                "formula": "x1+x2"
             },
             {
                 "mapKey": "waterlevel",
-                "formula": "x1+x2",
-                "parameter": [
-                    "x1",
-                    "x2"
-                ]
+                "formula": "x1+x2"
             },
             {
                 "mapKey": "ec",
-                "formula": "x1+x2",
-                "parameter": [
-                    "x1",
-                    "x2"
-                ]
+                "formula": "x1+x2"
             },
             {
                 "mapKey": "do",
-                "formula": "x1+x2",
-                "parameter": [
-                    "x1",
-                    "x2"
-                ]
+                "formula": "x1+x2"
             },
             {
                 "mapKey": "ph",
-                "formula": "x1+x2",
-                "parameter": [
-                    "x1",
-                    "x2"
-                ]
+                "formula": "x1+x2"
             },
             {
                 "mapKey": "pump1",
-                "formula": "x",
-                "parameter": [
-                    "x"
-                ]
+                "formula": "x1"
             },
             {
                 "mapKey": "pump2",
-                "formula": "x",
-                "parameter": [
-                    "x"
-                ]
+                "formula": "x1"
             }
         ]
     }
