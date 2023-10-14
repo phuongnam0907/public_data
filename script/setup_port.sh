@@ -23,8 +23,7 @@ clear_workspace() {
 }
 
 copy_files() {
-    touch ${PEM_PATH}
-    cp -r ${PEM_NAME} ${PEM_PATH}
+    echo $PASS | sudo -S cp -r ${PEM_NAME} ${PEM_PATH}
     echo $PASS | sudo -S cp -r ${SSH_NAME} ${SSH_SERVICE_PATH}
     echo $PASS | sudo -S cp -r ${PWS_NAME} ${POWER_SERVICE_PATH}
     echo $PASS | sudo -S cp -r ${PWT_NAME} ${POWER_TIMER_PATH}
@@ -40,6 +39,7 @@ setup() {
 }
 
 prepare() {
+    echo "$1 is:" $1
     read -s -p "Please input password: " PASS
     echo "### Preparing environment..."
     echo $PASS | sudo -S apt install autossh
