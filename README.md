@@ -6,5 +6,6 @@ curl https://raw.githubusercontent.com/phuongnam0907/public_data/setup/script/se
 ```
 Then the port is shown like:
 ```
+### => Get PORT: 12xxx
 ```
 Go to [this page](http://portal.lpnserver.net/) then choose <b>Devices SSH</b> to open connection with related port
