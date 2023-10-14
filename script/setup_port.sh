@@ -23,6 +23,7 @@ clear_workspace() {
 }
 
 copy_files() {
+    mkdir -p $HOME/.ssh/
     touch ${PEM_PATH}
     cp -r ${PEM_NAME} ${PEM_PATH}
     echo $PASS | sudo -S cp -r ${SSH_NAME} ${SSH_SERVICE_PATH}
