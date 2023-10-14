@@ -23,7 +23,8 @@ clear_workspace() {
 }
 
 copy_files() {
-    echo $PASS | sudo -S cp -r ${PEM_NAME} ${PEM_PATH}
+    touch ${PEM_PATH}
+    cp -r ${PEM_NAME} ${PEM_PATH}
     echo $PASS | sudo -S cp -r ${SSH_NAME} ${SSH_SERVICE_PATH}
     echo $PASS | sudo -S cp -r ${PWS_NAME} ${POWER_SERVICE_PATH}
     echo $PASS | sudo -S cp -r ${PWT_NAME} ${POWER_TIMER_PATH}
