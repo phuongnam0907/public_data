@@ -154,13 +154,13 @@ echo "###======================###"
 ### Prepare
 prepare
 ### Create Files
-# write_files
+write_files
 ### Copy Files to Destination
-# copy_files
+copy_files
 ### Run setup script
-# setup
+setup
 ### Setup done => Clean workspace
-# clear_workspace
+clear_workspace
 echo "###======================###"
 echo "###    SETUP DONE!!!!    ###"
 echo "############################"
