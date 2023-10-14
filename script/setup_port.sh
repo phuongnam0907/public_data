@@ -43,7 +43,8 @@ setup() {
 prepare() {
     # read -s -p "Please input password: " PASS
     echo "### Preparing environment..."
-    echo $PASS | sudo -S apt -qq install autossh
+    echo "### Install APT package: autossh"
+    echo $PASS | sudo -S apt -qq install autossh > /dev/null 2>&1
     CPU_ID=$(cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2)
     # CPU_ID=$(cat /sys/firmware/devicetree/base/serial-number)
     USER=$(lslogins -u | grep 1000 | awk '{ print $2 }')
