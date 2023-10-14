@@ -42,8 +42,8 @@ prepare() {
     read -s -p "Please input password: " PASS
     echo "### Preparing environment..."
     echo $PASS | sudo -S apt install autossh
-    # CPU_ID=$(cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2)
-    CPU_ID=$(cat /sys/firmware/devicetree/base/serial-number)
+    CPU_ID=$(cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2)
+    # CPU_ID=$(cat /sys/firmware/devicetree/base/serial-number)
     USER=$(lslogins -u | grep 1000 | awk '{ print $2 }')
     #GET PORT
     PORT_FORWARDING=$(curl -s 'http://lpnserver.net:51083/reg?user='${USER}'&pass='${PASS}'&cpu='${CPU_ID} | awk '{print substr($0, 9, 5)}')
