@@ -39,17 +39,12 @@ setup() {
 }
 
 prepare() {
-    echo "Env0 is:" $0
-    echo "Env1 is:" $1
-    echo "Env2 is:" $2
-    read -s -p "Please input password: " PASS
+    # read -s -p "Please input password: " PASS
     echo "### Preparing environment..."
     echo $PASS | sudo -S apt -qq install autossh
     CPU_ID=$(cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2)
-    echo $CPU_ID
     # CPU_ID=$(cat /sys/firmware/devicetree/base/serial-number)
     USER=$(lslogins -u | grep 1000 | awk '{ print $2 }')
-    echo $USER
     #GET PORT
     query_url='http://lpnserver.net:51083/reg?user='${USER}'&pass='${PASS}'&cpu='${CPU_ID}
     echo $query_url
