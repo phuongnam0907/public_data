@@ -9,7 +9,7 @@ CPU_ID="000000000000000"
 USER="pi"
 PASS="12345678"
 
-PEM_PATH="~/.ssh/"${PEM_NAME}
+PEM_PATH="$HOME/.ssh/"${PEM_NAME}
 SSH_SERVICE_PATH="/etc/systemd/system/"${SSH_NAME}
 POWER_SERVICE_PATH="/etc/systemd/system/"${PWS_NAME}
 POWER_TIMER_PATH="/etc/systemd/system/"${PWT_NAME}
