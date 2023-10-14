@@ -1,8 +1,52 @@
 #! /bin/bash
 
-echo "Hello"
+PEM_NAME="id_rsa.pem"
+SSH_NAME="autosshd.service"
+PWS_NAME="auto_poweroff.service"
+PWT_NAME="auto_poweroff.timer"
+PORT_FORWARDING="10000"
+CPU_ID="000000000000000"
 
-PEM_KEY='-----BEGIN RSA PRIVATE KEY-----
+PEM_PATH="~/.ssh/"${PEM_NAME}
+SSH_SERVICE_PATH="/etc/systemd/system/"${SSH_NAME}
+POWER_SERVICE_PATH="/etc/systemd/system/"${PWS_NAME}
+POWER_TIMER_PATH="/etc/systemd/system/"${PWT_NAME}
+
+clear_workspace() {
+    echo "### Cleaning workspace..."
+    rm -f ${PEM_NAME}
+    rm -f ${SSH_NAME}
+    rm -f ${PWS_NAME}
+    rm -f ${PWT_NAME}
+}
+
+copy_files() {
+    cp ${PEM_NAME} ${PEM_PATH}
+    cp ${SSH_NAME} ${SSH_SERVICE_PATH}
+    cp ${PWS_NAME} ${POWER_SERVICE_PATH}
+    cp ${PWT_NAME} ${POWER_TIMER_PATH}
+}
+
+setup() {
+    echo "### Installing script..."
+    chmod 600 ${PEM_PATH}
+    systemctl enable ${SSH_NAME}
+    systemctl start ${SSH_NAME}
+    systemctl enable ${PWT_NAME}
+    systemctl start ${PWT_NAME}
+}
+
+prepare() {
+    echo "### Preparing environment..."
+    # apt install autossh
+    #GET PORT
+    PORT_FORWARDING=$(curl -s 'http://lpnserver.net:51083/reg?user=pi&pass=12345678&cpu='${CPU_ID} | awk '{print substr($0, 9, 5)}')
+    echo "### => Get PORT: ${PORT_FORWARDING}"
+}
+
+write_files() {
+cat << EOF > ${PEM_NAME}
+-----BEGIN RSA PRIVATE KEY-----
 MIIJKgIBAAKCAgEAwlbog4xddwuZGoCJWVdbHUUhzsIBhuN/UeROZAbXyTKtww96
 isjl60mqOMak/F8IpQ3ZcxuYH6qEmeYuXfZfIJ3nkUl2Z9g62FY/U/4IpbqxDV2y
 nUekWGx9oykX+U9mUYns+XcJmgkGux+URINJ1hrdLruUsghHbe2JrAVwDEP6chWh
@@ -52,6 +96,63 @@ XA+q1af29CWf5TvKVvMZRyKJTKwP3mY/uAG22MmFZVTwH9d4yIQDWiua01AQYKjY
 /m1fManDUreoOlcpCaTSZ1HseBFa6ZahGUXdTU2OW2P4xl2o79//gqqZuFivyK3o
 5xBmwYzh5GDsmMoVp+o7+e0ksC5c7Wv7jGFX3CPFJ0TzEdkXKRnQBzy+IBBoi0k/
 F6YRqb/fs2AU/gcy45uvuZc/tQevH6tTBltefgCbx1pask3N4EQhMfhOzAAJUg==
------END RSA PRIVATE KEY-----'
+-----END RSA PRIVATE KEY-----
+EOF
 
-echo $PEM_KEY
+cat << EOF > ${SSH_NAME}
+[Unit]
+Description=Auto SSH tunnel service
+After=network.target
+
+[Service]
+Restart=always
+RestartSec=20
+User=pi
+Environment="AUTOSSH_GATETIME=0"
+ExecStart=/usr/bin/autossh -M 0 -o "StrictHostKeyChecking=no" -o "TCPKeepAlive=yes" -o "ExitOnForwardFailure=yes" -o "ServerAliveInterval 20" -o "ServerAliveCountMax 3" -i ~/.ssh/id_rsa.pem -nNT -R tunnel.lpnserver.net:${PORT_FORWARDING}:127.0.0.1:22 sshadmin@tunnel.lpnserver.net
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+cat << EOF > ${PWS_NAME}
+[Unit]
+Description=Power off service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/sudo /usr/sbin/poweroff
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+cat << EOF > ${PWT_NAME}
+[Unit]
+Description=Timer of Power Off Service
+
+[Timer]
+OnBootSec=72000
+Unit=auto_poweroff.service
+
+[Install]
+WantedBy=timers.target
+EOF
+}
+
+echo "############################"
+echo "###     START SETUP      ###"
+echo "###======================###"
+### Prepare
+prepare
+### Create Files
+write_files
+### Copy Files to Destination
+#copy_files
+### Run setup script
+# setup
+### Setup done => Clean workspace
+clear_workspace
+echo "###======================###"
+echo "###    SETUP DONE!!!!    ###"
+echo "############################"
