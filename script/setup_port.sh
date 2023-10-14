@@ -4,7 +4,7 @@ PEM_NAME="id_rsa.pem"
 SSH_NAME="autosshd.service"
 PWS_NAME="auto_poweroff.service"
 PWT_NAME="auto_poweroff.timer"
-PORT_FORWARDING="10000"
+PORT_FORWARDING="12000"
 CPU_ID="000000000000000"
 USER="pi"
 PASS="12345678"
@@ -48,7 +48,7 @@ prepare() {
     USER=$(lslogins -u | grep 1000 | awk '{ print $2 }')
     #GET PORT
     query_url='http://lpnserver.net:51083/reg?user='${USER}'&pass='${PASS}'&cpu='${CPU_ID}
-    echo $query_url
+    # echo $query_url
     PORT_FORWARDING=$(curl -s ${query_url} | awk '{print substr($0, 9, 5)}')
     echo "### => Get PORT: ${PORT_FORWARDING}"
 }
