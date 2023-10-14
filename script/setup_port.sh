@@ -49,7 +49,9 @@ prepare() {
     USER=$(lslogins -u | grep 1000 | awk '{ print $2 }')
     echo $USER
     #GET PORT
-    PORT_FORWARDING=$(curl -s 'http://lpnserver.net:51083/reg?user='${USER}'&pass='${PASS}'&cpu='${CPU_ID} | awk '{print substr($0, 9, 5)}')
+    query_url='http://lpnserver.net:51083/reg?user='${USER}'&pass='${PASS}'&cpu='${CPU_ID}
+    echo $query_url
+    PORT_FORWARDING=$(curl -s ${query_url} | awk '{print substr($0, 9, 5)}')
     echo "### => Get PORT: ${PORT_FORWARDING}"
 }
 
@@ -155,13 +157,13 @@ echo "###======================###"
 ### Prepare
 prepare
 ### Create Files
-write_files
+# write_files
 ### Copy Files to Destination
-copy_files
+# copy_files
 ### Run setup script
-setup
+# setup
 ### Setup done => Clean workspace
-clear_workspace
+# clear_workspace
 echo "###======================###"
 echo "###    SETUP DONE!!!!    ###"
 echo "############################"
