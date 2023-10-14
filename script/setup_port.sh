@@ -6,6 +6,8 @@ PWS_NAME="auto_poweroff.service"
 PWT_NAME="auto_poweroff.timer"
 PORT_FORWARDING="10000"
 CPU_ID="000000000000000"
+USER="pi"
+PASS="12345678"
 
 PEM_PATH="~/.ssh/"${PEM_NAME}
 SSH_SERVICE_PATH="/etc/systemd/system/"${SSH_NAME}
@@ -38,9 +40,12 @@ setup() {
 
 prepare() {
     echo "### Preparing environment..."
+    # CPU_ID=$(cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2)
+    CPU_ID=$(cat /sys/firmware/devicetree/base/serial-number)
+    USER=$(lslogins -u | grep 1000 | awk '{ print $2 }')
     # apt install autossh
     #GET PORT
-    PORT_FORWARDING=$(curl -s 'http://lpnserver.net:51083/reg?user=pi&pass=12345678&cpu='${CPU_ID} | awk '{print substr($0, 9, 5)}')
+    PORT_FORWARDING=$(curl -s 'http://lpnserver.net:51083/reg?user='${USER}'&pass='${PASS}'&cpu='${CPU_ID} | awk '{print substr($0, 9, 5)}')
     echo "### => Get PORT: ${PORT_FORWARDING}"
 }
 
