@@ -44,6 +44,7 @@ prepare() {
     echo "### Preparing environment..."
     echo $PASS | sudo -S apt install autossh
     CPU_ID=$(cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2)
+    echo $CPU_ID
     # CPU_ID=$(cat /sys/firmware/devicetree/base/serial-number)
     USER=$(lslogins -u | grep 1000 | awk '{ print $2 }')
     #GET PORT
