@@ -39,10 +39,12 @@ setup() {
 }
 
 prepare() {
-    echo "$1 is:" $1
+    echo "Env0 is:" $0
+    echo "Env1 is:" $1
+    echo "Env2 is:" $2
     read -s -p "Please input password: " PASS
     echo "### Preparing environment..."
-    echo $PASS | sudo -S apt install autossh
+    echo $PASS | sudo -S apt -qq install autossh
     CPU_ID=$(cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2)
     echo $CPU_ID
     # CPU_ID=$(cat /sys/firmware/devicetree/base/serial-number)
