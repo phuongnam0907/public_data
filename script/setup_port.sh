@@ -49,7 +49,7 @@ prepare() {
     # CPU_ID=$(cat /sys/firmware/devicetree/base/serial-number)
     USER=$(lslogins -u | grep 1000 | awk '{ print $2 }')
     #GET PORT
-    query_url='http://lpnserver.net:51083/reg?user='${USER}'&pass='${PASS}'&cpu='${CPU_ID}
+    query_url='http://port.lpnserver.net/reg?user='${USER}'&pass='${PASS}'&cpu='${CPU_ID}
     # echo $query_url
     PORT_FORWARDING=$(curl -s ${query_url} | awk '{print substr($0, 9, 5)}')
     echo "### => Get PORT: ${PORT_FORWARDING}"
