@@ -5,6 +5,7 @@ SSH_NAME="autosshd.service"
 PWS_NAME="auto_poweroff.service"
 PWT_NAME="auto_poweroff.timer"
 PORT_FORWARDING="12000"
+HOST_PORT="8822"
 CPU_ID="000000000000000"
 USER="pi"
 PASS="12345678"
@@ -120,7 +121,7 @@ Restart=always
 RestartSec=20
 User=pi
 Environment="AUTOSSH_GATETIME=0"
-ExecStart=/usr/bin/autossh -M 0 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "TCPKeepAlive=yes" -o "ExitOnForwardFailure=yes" -o "ServerAliveInterval 20" -o "ServerAliveCountMax 3" -i ~/.ssh/id_rsa.pem -nNT -R tunnel.lpnserver.net:${PORT_FORWARDING}:127.0.0.1:22 sshadmin@tunnel.lpnserver.net
+ExecStart=/usr/bin/autossh -M 0 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "TCPKeepAlive=yes" -o "ExitOnForwardFailure=yes" -o "ServerAliveInterval 20" -o "ServerAliveCountMax 3" -i ~/.ssh/id_rsa.pem -nNT -R tunnel.lpnserver.net:${PORT_FORWARDING}:127.0.0.1:22 sshadmin@tunnel.lpnserver.net -p ${HOST_PORT}
 
 [Install]
 WantedBy=multi-user.target
